@@ -1,0 +1,18 @@
+img {
+  margin-left: 10%;
+  float: left;
+}
+
+a {
+  font-weight: bold;
+  font-style: italic;
+}
+
+nav {
+  height: fit-content;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+button {
+  margin-right: 1%;
+}

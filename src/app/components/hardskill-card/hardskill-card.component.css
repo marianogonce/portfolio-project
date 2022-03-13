@@ -1,0 +1,25 @@
+#skillDescripcion {
+  font-weight: bold;
+  font-size: small;
+}
+
+.card {
+  width: 100%;
+  margin: 7px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.card-text {
+  font-size: smaller;
+}
+
+.card-body {
+  height: 100px;
+  overflow: auto;
+}
+
+.card:hover {
+  border-color: rgb(132, 33, 156);
+  box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.2);
+}

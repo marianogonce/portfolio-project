@@ -1,0 +1,10 @@
+<div class="card" style="width: 18rem;">
+  <img class="card-img-top" [src]="projectImagenUrl" [alt]="projectTitle + 'Card image'">
+  <div class="card-body">
+    <h5 class="card-title">{{projectTitle}}</h5>
+    <p class="card-text">{{projectSummary}}</p>
+    <p class="card-text">{{projectDate}}</p>
+    <button type="button" [routerLink]="['project', projectId]" class="btn btn-primary">Detalle</button>
+  </div>
+</div>
+

@@ -1,0 +1,27 @@
+@import "~bootstrap/dist/css/bootstrap.css";
+@import "material-icons/iconfont/material-icons.css";
+
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+}
+
+.green-snackbar {
+  background: #009e3d;
+  color: white;
+  position: absolute;
+  top: 7%;
+  right: 0;
+  z-index: 999999999;
+}
+
+.red-snackbar {
+  background: #b10505;
+  color: white;
+  position: absolute;
+  top: 7%;
+  right: 0;
+  z-index: 999999999;
+}

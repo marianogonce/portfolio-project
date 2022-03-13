@@ -1,0 +1,20 @@
+<app-nabvar></app-nabvar>
+<app-progress-spiner [Isloading]="PageLoading"></app-progress-spiner>
+<body *ngIf="PageLoading==='hidden'">
+  <div [style]="{'visibility': invalidUpdate}" class="alert alert-danger" role="alert">
+    Algo salió mal. No se pudo modificar la habilidad blanda. Inténtelo nuevamente. 
+  </div>
+    <form [formGroup]="form" (ngSubmit)="onSubmit($event)">
+    <h1>Update Softskill '{{softskillToUpdateData?.softskill_descripcion}}'</h1>
+    <div class="form-group">
+      <div>
+      <input formControlName="softskill_descripcion" type="softskill_descripcion" class="form-control" aria-describedby="softskillHelp" placeholder="Enter Softskill description update" >
+      </div>
+      <div *ngIf="softskill_descripcion!.touched && softskill_descripcion!.invalid" class="alert alert-danger">SoftSkill description is required</div>
+    </div>
+    <button type="submit" class="btn btn-primary">Update Softskill</button>
+    <hr>
+    <button type="submit" class="btn btn-dark" routerLink="">Back to portfolio</button>
+    <mat-spinner color="accent" diameter=80 [style]="{'visibility': loadingRequest}"></mat-spinner>
+  </form>
+</body>

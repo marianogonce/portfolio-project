@@ -1,0 +1,6 @@
+<nav class="navbar sticky-top navbar-white bg-white">
+    <a class="navbar-brand" href="https://www.argentina.gob.ar/produccion/transformacion-digital-y-economia-del-conocimiento/argentina-programa" target="blank">
+      <img src="../../assets/img/image.png" width="234" height="40" class="d-inline-block align-top" alt="logo del Programa  - 'Argentina Programa'"></a>
+    <button *ngIf="!service.isLoggedIn()" type="button" routerLink="/login" class="btn btn-outline-dark">Login</button>
+    <button *ngIf="service.isLoggedIn()" type="button" (click)="service.logout()" routerLink="" class="btn btn-outline-dark">Logout</button>
+  </nav>

@@ -1,0 +1,25 @@
+a {
+  margin: 4%;
+  display: block;
+  clear: both;
+}
+
+.card-header:hover {
+  cursor: pointer;
+  background-color: #727275;
+  color: white;
+}
+
+.card {
+  margin-top: 3%;
+}
+
+.btn {
+  background-color: #727275;
+  color: white;
+}
+
+app-add-button {
+  float: right;
+  clear: both;
+}

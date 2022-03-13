@@ -1,0 +1,39 @@
+<body>
+  <div [style]="{'visibility': invalidLoggedIn}" class="alert alert-danger" role="alert">
+    Usuario o Contraseña Incorrectos. Por favor intente nuevamente. 
+  </div>
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+          <div class="card border-0 rounded-3 my-5">
+            <div class="card-body p-4 p-sm-5">
+              <h1 class=" text-center ">Login </h1>
+              <h5 class="card-title text-center mb-5 fs-5"></h5>
+              <form [formGroup]="form" (ngSubmit)="onSubmit($event)">
+                <div class="form-floating mb-3">
+                  <input 
+                  formControlName="username"
+                  type="username" class="form-control" id="floatingInput" placeholder="userName">
+                  <label for="floatingInput">User Name</label>
+                <div *ngIf="username!.touched && username!.invalid" class="alert alert-danger">UserName is required</div>
+                </div>
+                <div class="form-floating mb-3">
+                  <input 
+                  formControlName="password"
+                  type="password" class="form-control" id="floatingPassword" placeholder="Password">
+                  <label for="floatingPassword">Password</label>
+                  <div *ngIf="password!.touched && password!.invalid" class="alert alert-danger" class="alert alert-danger">Password is required</div>
+                </div>
+                <div class="d-grid">
+                  <button class="btn btn-primary btn-login text-uppercase fw-bold" type="submit">Iniciar Sesión</button>
+                </div>
+                <div class="d-grid">
+                  <button id="volver" routerLink="" class="btn btn-dark btn-login text-uppercase fw-bold" >Volver al Portfolio</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</body>

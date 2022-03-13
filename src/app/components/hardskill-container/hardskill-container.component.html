@@ -1,0 +1,17 @@
+<section-container formUrl="newhardskill" [icono]="faCalculator" [arrayDeElementos]="listadoHardSkills" [tituloYDescripcion]="{titulo: 'Hard Skills', descripcion: 'Competencias relacionadas con el conocimiento técnico adquirido durante la formación profesional y/o autodidacta' }">
+    <ng-container class="container" *ngFor="let skill of listadoHardSkills  | paginate: {id:'hardskills', itemsPerPage: 5, currentPage: pageHardskill }" class="container">
+        <hardskill-card 
+        (newItemEvent)="deleteHardSkill($event)"
+        [skillId]="skill.hardskill_id"
+        [skillDescripcion]="skill.hardskill_descripcion" 
+        [skillNivel]="skill.hardskill_level" 
+        [skillTipo]="skill.hardskill_type"></hardskill-card>
+    </ng-container>
+    <p *ngIf="listadoHardSkills.length===0"><b>No hay habilidades duras cargadas</b></p>
+    <pagination-controls *ngIf="listadoHardSkills.length!=0" id="hardskills" (pageChange)="pageHardskill=$event" previousLabel="Anterior" nextLabel="Siguiente"></pagination-controls>
+</section-container>
+
+
+
+
+  

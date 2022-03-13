@@ -1,0 +1,8 @@
+.material-icons {
+  color: rgb(75, 74, 78);
+}
+
+.material-icons:hover {
+  cursor: pointer;
+  color: rgb(42, 39, 39);
+}

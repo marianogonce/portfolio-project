@@ -1,0 +1,7 @@
+<section-container  formUrl="newsoftskill" [icono]="faHandshake" [arrayDeElementos]="listadoDeSoftSkills" [tituloYDescripcion]="{titulo: 'Soft Skills', descripcion: 'Listado de habilidades blandas' }">
+    <ng-container class="container" *ngFor="let softskill of listadoDeSoftSkills | paginate: {id:'softskillPagination', itemsPerPage: 20, currentPage: pageSoftSkill }" class="container">
+        <softskills-badge (newItemEvent)="deletesoftSkill($event)" [softskillDescripcion]="softskill.softskill_descripcion" [softskillId]="softskill.softskill_Id"></softskills-badge>
+    </ng-container>
+    <p *ngIf="listadoDeSoftSkills.length===0"><b>No hay habilidades blandas cargadas</b></p>
+    <pagination-controls *ngIf="listadoDeSoftSkills.length!=0" id="softskillPagination" (pageChange)="pageSoftSkill=$event" previousLabel="Anterior" nextLabel="Siguiente"></pagination-controls>
+</section-container>

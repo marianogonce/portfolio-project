@@ -1,0 +1,36 @@
+img {
+  width: 64px;
+  height: 64px;
+}
+
+.media-body {
+  text-align: left;
+  margin-left: 10px;
+  width: 100%;
+}
+
+.media {
+  display: flex;
+  -webkit-box-align: start;
+  -ms-flex-align: start;
+  align-items: flex-start;
+  letter-spacing: 2px;
+}
+
+.media:hover {
+  color: #727275;
+}
+
+.card-header:hover {
+  cursor: pointer;
+  background-color: #adadb8;
+  color: white;
+}
+
+p {
+  margin: 0;
+}
+
+#ciudad {
+  color: #b3acd1;
+}

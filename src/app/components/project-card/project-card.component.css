@@ -1,0 +1,10 @@
+.card {
+  display: inline-block;
+  vertical-align: middle;
+  margin: 5px;
+}
+
+.card:hover {
+  border-color: rgb(132, 33, 156);
+  box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.2);
+}

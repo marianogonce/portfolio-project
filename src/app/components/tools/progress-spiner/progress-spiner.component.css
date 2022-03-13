@@ -1,0 +1,10 @@
+div {
+  position: fixed;
+  background-color: white;
+  height: 70%;
+  width: 100%;
+  display: flex; /* NEW, Spec - Firefox, Chrome, Opera */
+
+  justify-content: center;
+  align-items: center;
+}

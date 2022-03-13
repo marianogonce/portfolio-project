@@ -1,0 +1,9 @@
+.mat-stroked-button {
+  color: rgb(3, 138, 3);
+  border-color: rgb(3, 138, 3);
+  font-size: small;
+}
+
+.mat-stroked-button:hover {
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}

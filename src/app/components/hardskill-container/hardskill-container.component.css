@@ -1,0 +1,15 @@
+.container {
+  display: flex;
+}
+
+a {
+  margin: 4%;
+  display: block;
+  clear: both;
+}
+
+.card-header:hover {
+  cursor: pointer;
+  background-color: #7460ee;
+  color: white;
+}

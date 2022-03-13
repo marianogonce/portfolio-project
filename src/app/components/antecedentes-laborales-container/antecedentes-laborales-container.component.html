@@ -1,0 +1,15 @@
+<section-container [icono]="faSuitcase" [arrayDeElementos]="listadoAntecedentes" [tituloYDescripcion]="{titulo: 'Antecedentes Laborales', descripcion: 'Detalle de los empleadores, tareas y períodos de trabajo' }">
+    <ng-container class="container" *ngFor="let antecedente of listadoAntecedentes | paginate: { id:'antecedentesLaborales', itemsPerPage: 3, currentPage: pageAntecedentesLaborales }" class="container">
+        <antecedentes-card
+        [institucion]="antecedente.antlaborales_empleador"
+        [imagenUrl]="antecedente.antlaborales_img_url"
+        [titulo]="antecedente.antlaborales_puesto"
+        [descripcion]="antecedente.antlaborales_descripcion"
+        [periodoFinal]="antecedente.antlaborales_fecha_final"
+        [periodoInicio]="antecedente.antlaborales_fecha_inicio"
+        [IsAcademic]="false"
+        [ciudad]="antecedente.antlaborales_lugar"
+        ></antecedentes-card>
+    </ng-container>        
+    <pagination-controls id="antecedentesLaborales" (pageChange)="pageAntecedentesLaborales=$event" previousLabel="Anterior" nextLabel="Siguiente"></pagination-controls>
+</section-container>

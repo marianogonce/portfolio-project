@@ -1,0 +1,29 @@
+<hr>
+<div class="media">
+    <img class="align-self-start mr-3" [src]="imagenUrl" [alt]= "'logo de' + institucion">
+    <div class="media-body">
+      <h5 class="mt-0">{{titulo}} {{genero? '(' + genero + ')' : ''}}</h5>
+      <ng-container *ngIf="!IsAcademic">
+        <p id="ciudad">{{ ciudad }}</p>
+        </ng-container>
+      <p><b class="bold">{{IsAcademic? 'Institución: ': 'Lugar de Trabajo: '}}</b>{{institucion}}</p>
+      <p><b >Período: </b> Del {{periodoInicio}} al {{periodoFinal}}</p>
+      <ng-container *ngIf="IsAcademic">
+      <p><b >Estado: </b> <span class="badge" [style]="{'background-color':defineBadgeColor()}"> {{estadoString}}</span></p>
+      </ng-container>
+      <br>
+      <div class="card border-light mb-3">
+        <div class="card-header" (click)="ShowOrHideDescription()">{{IsAcademic? 'Detalle del curso/carrera ' : 'Detalle del Puesto de Trabajo y tareas ralizadas ' }}<fa-icon [icon]="IsHide? faAngleDown : faAngleUp"></fa-icon></div>
+        <ng-container *ngIf="!IsHide">
+        <div class="card-body text-dark">
+          <p class="card-text">{{descripcion}}</p>
+        </div>
+        </ng-container>
+      </div>
+    </div>
+</div>
+
+
+
+
+

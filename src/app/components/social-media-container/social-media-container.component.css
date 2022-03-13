@@ -1,0 +1,32 @@
+#socialMediaContainer {
+  background-color: white;
+  position: fixed;
+  top: 20%;
+  width: 65px;
+  height: 150px;
+  z-index: 8;
+  box-shadow: 4px 1px 5px rgb(184, 184, 184);
+  border-radius: 0% 5% 5% 0%;
+}
+
+.svg-inline--fa {
+  display: var(--fa-display, inline-block);
+  height: 3em;
+  overflow: visible;
+  vertical-align: -3.125em;
+  margin-left: 11px;
+}
+
+a {
+  color: rgb(144, 144, 144);
+}
+
+a:hover {
+  color: rgb(122, 122, 122);
+}
+
+@media only screen and (max-width: 768px) {
+  #socialMediaContainer {
+    display: none;
+  }
+}

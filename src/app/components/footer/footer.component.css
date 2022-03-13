@@ -1,0 +1,40 @@
+/* Sticky Footer Classes */
+
+#page-content {
+  flex: 1 0 auto;
+  background-color: white;
+  height: auto;
+}
+
+/* Other Classes for Page Styling */
+
+body {
+  background: #7b7f83;
+  background: linear-gradient(to right, #748397, #697177);
+}
+
+h1 {
+  font-size: 20px;
+}
+
+img {
+  width: 200px;
+  height: 60px;
+  margin-bottom: 20px;
+}
+
+.svg-inline--fa {
+  display: var(--fa-display, inline-block);
+  height: 3em;
+  overflow: visible;
+  vertical-align: -3.125em;
+  margin-left: 11px;
+}
+
+a {
+  color: white;
+}
+
+#bodyfooter {
+  height: 33%;
+}
