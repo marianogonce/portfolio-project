@@ -2,30 +2,20 @@
 <div *ngIf="PageLoading==='hidden'" class="padding" [style.padding-left]="havePadding? '10%' : '0'" [style.padding-right]="havePadding? '10%' : '0'">
     <div class="col-md-8">
         <!-- Column -->
-        <div class="card"><h1>{{autor.frase_Portada}}</h1><img class="card-img-top" [src]="autor.img_portada_url" alt="Card image cap">
+        <div class="card"><h1>{{autor.frase_Portada}}</h1><img class="card-img-top" [src]="urlServerDownloadFile + 'backgroundpicture' + autor.img_portada_ext" alt="Card image cap">
           <div class="card-body little-profile text-center">
-                <div id="profile" class="pro-img"><img [src]="autor.foto_perfil_url" alt="profile-img"></div>
-                <h3 class="m-b-0">{{autor.nombre_apellido}}</h3>
+                <div id="profile" class="pro-img"><img [src]="urlServerDownloadFile +'profilepicture' + autor.foto_perfil_ext" alt="profile-img"></div>
+                <h3 class="m-b-0">{{autor.nombre_apellido | titlecase}} <span *ngIf="authService.isLoggedIn()"><app-edit-buttom routerLink="updateAuthor"></app-edit-buttom></span></h3>
                 <p id="zona_trabajo">{{autor.radicacion}}</p>
-                <p id="edad">{{autor.fecha_nacimiento}}</p>
+                <p id="edad">{{calcularEdad()}} años</p>
                 <p>{{autor.profesion}}</p> <a
                 class="btn btn-primary"
-                href="../../../assets/Currículum.pdf"
-                target="_blank"
+                [href]="urlServerDownloadFile + 'cv.pdf'"
                 data-aos="zoom-in"
                 data-aos-anchor="data-aos-anchor"
                 >Download CV</a
               >
                 <div class="row text-center m-t-20">
-                    <div class="col-lg-4 col-md-4 m-t-20">
-                        <h3 class="m-b-0 font-light">4</h3><small>projects</small>
-                    </div>
-                    <div class="col-lg-4 col-md-4 m-t-20">
-                        <h3 class="m-b-0 font-light">4</h3><small>stacks</small>
-                    </div>
-                    <div class="col-lg-4 col-md-4 m-t-20">
-                        <h3 class="m-b-0 font-light">6</h3><small>programming languages</small>
-                    </div>
                     <p id="about_me_title">About me</p>
                     <p id="descripcion">{{autor.descripcion_perfil}}</p>
     <ng-content>

@@ -6,10 +6,11 @@ img {
 .media-body {
   text-align: left;
   margin-left: 10px;
-  width: 100%;
+  width: 84%;
 }
 
 .media {
+  width: 100%;
   display: flex;
   -webkit-box-align: start;
   -ms-flex-align: start;
@@ -34,3 +35,7 @@ p {
 #ciudad {
   color: #b3acd1;
 }
+
+
+
+

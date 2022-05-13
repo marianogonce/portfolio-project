@@ -1,13 +1,15 @@
 
-<section-container [icono]="faAtom" [arrayDeElementos]="listadoProyectos" [tituloYDescripcion]="{titulo: 'Proyectos', descripcion: 'Detalle de los proyectos desarrollados' }">
-    <ng-container class="container" *ngFor="let projecto of listadoProyectos  | paginate: {id:'projects', itemsPerPage: 3, currentPage: pageProject }" class="container">
+<section-container formUrl="addProject" [icono]="faAtom" [arrayDeElementos]="listadoDeProyectos" [tituloYDescripcion]="{titulo: 'Proyectos', descripcion: 'Detalle de los proyectos desarrollados' }">
+    <ng-container class="container" *ngFor="let projecto of listadoDeProyectos  | paginate: {id:'projects', itemsPerPage: 3, currentPage: pageProject }" class="container">
      <project-card
-     [projectImagenUrl] = "projecto.imagenUrl"
-     [projectTitle]= "projecto.tituloProyecto" 
-     [projectSummary]= "projecto.descripcion"
-     [projectId]="projecto.projectId"
-     projectDate= "20/12/2022"
+     (newItemEvent)="deleteProject($event)"
+     [projectImagenExt] = "projecto.img_ext"
+     [projectTitle]= "projecto.proyecto_titulo" 
+     [projectSummary]= "projecto.summary"
+     [projectId]="projecto.proyecto_id"
+     [projectDate]= "projecto.proyecto_fecha"
      ></project-card>
     </ng-container>
-    <pagination-controls id="projects" (pageChange)="pageProject=$event" previousLabel="Anterior" nextLabel="Siguiente"></pagination-controls>
+    <p *ngIf="listadoDeProyectos.length===0"><b>No hay proyectos cargados</b></p>
+    <pagination-controls *ngIf="listadoDeProyectos.length!==0" id="projects" (pageChange)="pageProject=$event" previousLabel="Anterior" nextLabel="Siguiente"></pagination-controls>
 </section-container>

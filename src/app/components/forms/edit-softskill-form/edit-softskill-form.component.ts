@@ -94,23 +94,18 @@ export class EditSoftskillFormComponent implements OnInit {
               .map((e) => e.softskill_Id)
               .indexOf(parseInt(this.sofskilltoUpdateId))
           ];
-        this.softskill_descripcion?.setValue(
-          this.softskillToUpdateData.softskill_descripcion
-        );
         if (!this.softskillToUpdateData) {
           this.router.navigate(['/notfound']);
         }
+        this.softskill_descripcion?.setValue(
+          this.softskillToUpdateData.softskill_descripcion
+        );
       },
       error: (error: any) => {
         this.router.navigate([
           `error/${error.error.status}/${error.error.error}`,
         ]);
-        openSnackBar(
-          this._snackBar,
-          `${error.error.error}`,
-          'red-snackbar',
-          'x'
-        );
+        openSnackBar(this._snackBar, `${error?.message}`, 'red-snackbar', 'x');
       },
     });
   }

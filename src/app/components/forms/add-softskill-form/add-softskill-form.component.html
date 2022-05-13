@@ -4,8 +4,8 @@
   <div [style]="{'visibility': invalidAdd}" class="alert alert-danger" role="alert">
     Algo salió mal. No se pudo agregar una  nueva habilidad blanda. Inténtelo nuevamente. 
   </div>
+  <h1>New Softskill</h1>
     <form [formGroup]="form" (ngSubmit)="onSubmit($event)">
-    <h1>New Softskill</h1>
     <div class="form-group">
       <input formControlName="softskill_descripcion" type="email" class="form-control" aria-describedby="softskillHelp" placeholder="Enter Softskill description" >
       <div *ngIf="softskill_descripcion!.touched && softskill_descripcion!.invalid" class="alert alert-danger">SoftSkill description is required</div>

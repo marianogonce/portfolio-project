@@ -1,22 +1,14 @@
 import { Injectable } from '@angular/core';
 import { DataService } from '../data.service';
-import {HttpClient} from '@angular/common/http';
-import {url} from '../url';
-
-export interface HardSkillType {
-  skillId: number,
-  descripcionSkill: string,
-  tipo : string,
-  nivel: string,
-}
-
+import { HttpClient } from '@angular/common/http';
+import { url } from '../url';
+import { AuthService } from '../authService/auth.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class HardskillsService extends DataService {
-  
-  constructor (http: HttpClient) { 
-    super(url + "/hardskills", http);
+  constructor(http: HttpClient, authService: AuthService) {
+    super(url + '/hardskills', http, authService);
   }
 }

@@ -1,8 +1,10 @@
-<section-container [icono]="faSuitcase" [arrayDeElementos]="listadoAntecedentes" [tituloYDescripcion]="{titulo: 'Antecedentes Laborales', descripcion: 'Detalle de los empleadores, tareas y períodos de trabajo' }">
+<section-container formUrl="addAntLaboral"  [icono]="faSuitcase" [arrayDeElementos]="listadoAntecedentes" [tituloYDescripcion]="{titulo: 'Antecedentes Laborales', descripcion: 'Detalle de los empleadores, tareas y períodos de trabajo' }">
     <ng-container class="container" *ngFor="let antecedente of listadoAntecedentes | paginate: { id:'antecedentesLaborales', itemsPerPage: 3, currentPage: pageAntecedentesLaborales }" class="container">
         <antecedentes-card
+        (newItemEvent)="deleteAntecedente($event)"
+        [antId] = "antecedente.antlaborales_id"
         [institucion]="antecedente.antlaborales_empleador"
-        [imagenUrl]="antecedente.antlaborales_img_url"
+        [imagenExt]="antecedente.antlaborales_img_ext"
         [titulo]="antecedente.antlaborales_puesto"
         [descripcion]="antecedente.antlaborales_descripcion"
         [periodoFinal]="antecedente.antlaborales_fecha_final"
@@ -10,6 +12,7 @@
         [IsAcademic]="false"
         [ciudad]="antecedente.antlaborales_lugar"
         ></antecedentes-card>
-    </ng-container>        
-    <pagination-controls id="antecedentesLaborales" (pageChange)="pageAntecedentesLaborales=$event" previousLabel="Anterior" nextLabel="Siguiente"></pagination-controls>
+    </ng-container>
+    <p *ngIf="listadoAntecedentes.length===0"><b>No hay antecedentes cargados</b></p>        
+    <pagination-controls *ngIf="listadoAntecedentes.length!==0" id="antecedentesLaborales" (pageChange)="pageAntecedentesLaborales=$event" previousLabel="Anterior" nextLabel="Siguiente"></pagination-controls>
 </section-container>

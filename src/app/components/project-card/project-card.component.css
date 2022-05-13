@@ -8,3 +8,15 @@
   border-color: rgb(132, 33, 156);
   box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.2);
 }
+
+img {
+  height: 350px;
+  object-fit: cover;
+
+}
+
+#cuerpo {
+  height: 150px;
+  overflow:auto;
+}
+

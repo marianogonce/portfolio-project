@@ -24,8 +24,10 @@
 
 #contenedor {
   display: inline-block;
+  width: auto;
 }
 
 p {
   margin: 0;
 }
+

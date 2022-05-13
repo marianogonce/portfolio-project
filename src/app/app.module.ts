@@ -1,16 +1,16 @@
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import {HttpClientModule} from '@angular/common/http'
+import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { LayoutModule } from '@angular/cdk/layout';
-import {RouterModule} from '@angular/router'
+import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NabvarComponent } from './components/nabvar/nabvar.component';
 import { MainContainerComponent } from './components/main-container/main-container.component';
 import { HardskillContainerComponent } from './components/hardskill-container/hardskill-container.component';
 import { HardskillCardComponent } from './components/hardskill-card/hardskill-card.component';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { HardskillsService } from './services/hardskillsService/hardskills.service';
 import { SectionContainerComponent } from './components/section-container/section-container.component';
 import { AntecedentesCardComponent } from './components/antecedentes-card/antecedentes-card.component';
@@ -20,7 +20,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SoftskillsContainerComponent } from './components/softskills-container/softskills-container.component';
 import { SoftskillsBadgeComponent } from './components/softskills-badge/softskills-badge.component';
 import { SoftskillsService } from './services/softSkillsService/softskills.service';
-import {NgxPaginationModule} from 'ngx-pagination';
+import { NgxPaginationModule } from 'ngx-pagination';
 import { FooterComponent } from './components/footer/footer.component';
 import { SocialMediaContainerComponent } from './components/social-media-container/social-media-container.component';
 import { AntecedentesLaboralesContainerComponent } from './components/antecedentes-laborales-container/antecedentes-laborales-container.component';
@@ -32,13 +32,13 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
 import { AntecedentesLaboralesService } from './services/antLaboralesService/antecedentes-laborales.service';
 import { ProjectsService } from './services/projectService/projects.service';
 import { AutorService } from './services/autorService/autor.service';
-import {AuthService} from './services/authService/auth.service';
+import { AuthService } from './services/authService/auth.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ProgressSpinerComponent } from './components/tools/progress-spiner/progress-spiner.component';
-import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { AddButtonComponent } from './components/tools/add-button/add-button.component';
-import {MatButtonModule} from '@angular/material/button';
+import { MatButtonModule } from '@angular/material/button';
 import { AddSoftskillFormComponent } from './components/forms/add-softskill-form/add-softskill-form.component';
 import { DeleteButtomComponent } from './components/tools/delete-buttom/delete-buttom.component';
 import { AuthorProfileComponent } from './components/author-profile/author-profile.component';
@@ -49,7 +49,17 @@ import { AuthGuard } from './services/auth-guard.service';
 import { AddHardskillFormComponent } from './components/forms/add-hardskill-form/add-hardskill-form.component';
 import { UpdateHardskillFormComponent } from './components/forms/update-hardskill-form/update-hardskill-form.component';
 import { HardskillLevelService } from './services/hardskillLevelService/hardskill-level.service';
-
+import { AddAntAcademicosFormComponent } from './components/forms/add-ant-academicos-form/add-ant-academicos-form.component';
+import { EstadoAcademicoService } from './services/antAcademicosEstadoService/estado-academico.service';
+import { FileUploadComponent } from './components/tools/file-upload/file-upload.component';
+import { FileServiceService } from './services/fileService/file-service.service';
+import { EditAntAcademicosFormComponent } from './components/forms/edit-ant-academicos-form/edit-ant-academicos-form.component';
+import { RecaptchaModule } from 'ng-recaptcha';
+import { EditAuthorFormComponent } from './components/forms/edit-author-form/edit-author-form.component';
+import { AddAntLaboralFormComponent } from './components/forms/add-ant-laboral-form/add-ant-laboral-form.component';
+import { UpdateAntLaboralFormComponent } from './components/forms/update-ant-laboral-form/update-ant-laboral-form.component';
+import { AddProjectFormComponent } from './components/forms/add-project-form/add-project-form.component';
+import { UpdateProjectFormComponent } from './components/forms/update-project-form/update-project-form.component';
 
 @NgModule({
   declarations: [
@@ -81,6 +91,14 @@ import { HardskillLevelService } from './services/hardskillLevelService/hardskil
     Error500Component,
     AddHardskillFormComponent,
     UpdateHardskillFormComponent,
+    AddAntAcademicosFormComponent,
+    FileUploadComponent,
+    EditAntAcademicosFormComponent,
+    EditAuthorFormComponent,
+    AddAntLaboralFormComponent,
+    UpdateAntLaboralFormComponent,
+    AddProjectFormComponent,
+    UpdateProjectFormComponent,
   ],
   imports: [
     BrowserModule,
@@ -94,27 +112,92 @@ import { HardskillLevelService } from './services/hardskillLevelService/hardskil
     NgbModule,
     HttpClientModule,
     NgxPaginationModule,
-    RouterModule.forRoot([
-      {path: '', component: MainContainerComponent},
-      {path: 'login', component: LoginComponent},
-      {path: 'project/:idProject', component: ProjectProfileComponent },
-      {path: 'newsoftskill', component: AddSoftskillFormComponent, canActivate: [AuthGuard] },
-      {path: 'newhardskill', component: AddHardskillFormComponent, canActivate: [AuthGuard] },
-      {path: 'updatesoftskill/:idSoftskill', component: EditSoftskillFormComponent, canActivate: [AuthGuard] },
-      {path: 'error/:statuscode/:statusdescription', component: Error500Component },
-      {path: '**', component: NotFoundComponent },
-    ], {scrollPositionRestoration: 'top'}),
-    BrowserAnimationsModule
+    RouterModule.forRoot(
+      [
+        { path: '', component: MainContainerComponent },
+        { path: 'login', component: LoginComponent },
+        {
+          path: 'project/:idProject',
+          component: ProjectProfileComponent,
+        },
+        {
+          path: 'newsoftskill',
+          component: AddSoftskillFormComponent,
+          canActivate: [AuthGuard],
+        },
+        {
+          path: 'newhardskill',
+          component: AddHardskillFormComponent,
+          canActivate: [AuthGuard],
+        },
+        {
+          path: 'newantacademicos',
+          component: AddAntAcademicosFormComponent,
+          canActivate: [AuthGuard],
+        },
+        {
+          path: 'updatesoftskill/:idSoftskill',
+          component: EditSoftskillFormComponent,
+          canActivate: [AuthGuard],
+        },
+        {
+          path: 'updateantAcademico/:idAntAcademico',
+          component: EditAntAcademicosFormComponent,
+          canActivate: [AuthGuard],
+        },
+        {
+          path: 'updatehardskill/:idhardskill',
+          component: UpdateHardskillFormComponent,
+          canActivate: [AuthGuard],
+        },
+        {
+          path: 'updateAuthor',
+          component: EditAuthorFormComponent,
+          canActivate: [AuthGuard],
+        },
+        {
+          path: 'addAntLaboral',
+          component: AddAntLaboralFormComponent,
+          canActivate: [AuthGuard],
+        },
+        {
+          path: 'updateAntLaboral/:antlaboralId',
+          component: UpdateAntLaboralFormComponent,
+          canActivate: [AuthGuard],
+        },
+        {
+          path: 'addProject',
+          component: AddProjectFormComponent,
+          canActivate: [AuthGuard],
+        },
+        {
+          path: 'updateProject/:projectId',
+          component: UpdateProjectFormComponent,
+          canActivate: [AuthGuard],
+        },
+        {
+          path: 'error/:statuscode/:statusdescription',
+          component: Error500Component,
+        },
+        { path: '**', component: NotFoundComponent },
+      ],
+      { scrollPositionRestoration: 'top' }
+    ),
+    BrowserAnimationsModule,
+    RecaptchaModule,
   ],
   providers: [
     HardskillsService,
-    AuthService, 
-    AntecedentesAcedemicosService, 
-    SoftskillsService, 
-    AntecedentesLaboralesService, 
-    ProjectsService, 
+    AuthService,
+    AntecedentesAcedemicosService,
+    SoftskillsService,
+    AntecedentesLaboralesService,
+    ProjectsService,
     AutorService,
-    HardskillLevelService],
-  bootstrap: [AppComponent]
+    HardskillLevelService,
+    EstadoAcademicoService,
+    FileServiceService,
+  ],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

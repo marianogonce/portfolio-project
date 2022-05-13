@@ -1,1 +1,31 @@
-
+<app-nabvar></app-nabvar>
+<app-progress-spiner [Isloading]="PageLoading"></app-progress-spiner>
+<body *ngIf="PageLoading==='hidden'">
+  <div [style]="{'visibility': invalidAdd}" class="alert alert-danger" role="alert">
+    Algo salió mal. No se pudo editar la habilidad dura. Inténtelo nuevamente. 
+  </div>
+  <h1>Editar HardSkill "{{hardskillToUpdateData.hardskill_descripcion}}"</h1>
+    <form [formGroup]="Hardskillform" (ngSubmit)="onSubmit($event)">
+    <div class="form-group">
+      <input formControlName="hardskill_descripcion" type="text" class="form-control" aria-describedby="hardskillHelp" placeholder="Description" >
+      <div *ngIf="hardskill_descripcion!.touched && hardskill_descripcion!.invalid" class="alert alert-danger">HardSkill description is required</div>
+    </div>
+    <div class="form-group">
+      <input formControlName="hardskill_type" type="text" class="form-control" id="typeFormControl" placeholder="Type">
+      <div *ngIf="hardskill_type!.touched && hardskill_type!.invalid" class="alert alert-danger">HardSkill type is required</div>
+    </div>
+    <div class="form-group">
+      <label for="exampleFormControlSelect1">Select level</label>
+      <select formControlName="hardskill_level" class="form-control" id="levelFormControlSelect">
+        <div *ngIf="hardskill_level!.touched && hardskill_level!.invalid" class="alert alert-danger">HardSkill level is required</div>
+        <ng-container *ngFor="let level of levels">
+        <option [defaultSelected]="0" [value]="level.level_id">{{level.level_descripcion | uppercase}}</option>
+      </ng-container>
+      </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Editar HardSkill</button>
+    <hr>
+    <button type="submit" class="btn btn-dark" routerLink="">Back to portfolio</button>
+    <mat-spinner color="accent" diameter=80 [style]="{'visibility': loadingRequest}"></mat-spinner>
+  </form>
+</body>

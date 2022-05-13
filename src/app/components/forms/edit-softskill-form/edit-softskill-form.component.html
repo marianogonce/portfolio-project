@@ -4,8 +4,8 @@
   <div [style]="{'visibility': invalidUpdate}" class="alert alert-danger" role="alert">
     Algo salió mal. No se pudo modificar la habilidad blanda. Inténtelo nuevamente. 
   </div>
+  <h1>Update Softskill '{{softskillToUpdateData?.softskill_descripcion}}'</h1>
     <form [formGroup]="form" (ngSubmit)="onSubmit($event)">
-    <h1>Update Softskill '{{softskillToUpdateData?.softskill_descripcion}}'</h1>
     <div class="form-group">
       <div>
       <input formControlName="softskill_descripcion" type="softskill_descripcion" class="form-control" aria-describedby="softskillHelp" placeholder="Enter Softskill description update" >

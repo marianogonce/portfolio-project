@@ -1,8 +1,8 @@
 <div class="card" style="width: 9rem;">
     <img class="card-img-top" [src]="urlDefined" alt="Card image cap">
     <div class="card-body">
-      <p id="skillDescripcion" class="card-text">{{skillDescripcion}}</p>
-      <p class="card-text">{{skillTipo}}</p>
+      <p id="skillDescripcion" class="card-text">{{skillDescripcion | titlecase}}</p>
+      <p class="card-text">{{skillTipo | lowercase}}</p>
     </div>
     <span *ngIf="authService.isLoggedIn()"><app-delete-buttom (click)="deleteHardSkill()"></app-delete-buttom ><app-edit-buttom [routerLink]="'updatehardskill/' + skillId"></app-edit-buttom></span>
 </div>

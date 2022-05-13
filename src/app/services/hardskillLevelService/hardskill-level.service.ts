@@ -2,13 +2,13 @@ import { Injectable } from '@angular/core';
 import { DataService } from '../data.service';
 import { HttpClient } from '@angular/common/http';
 import { url } from '../url';
+import { AuthService } from '../authService/auth.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class HardskillLevelService extends DataService {
-
-  constructor (http: HttpClient) { 
-    super(url + "/hardskillslevels", http);
+  constructor(http: HttpClient, authService: AuthService) {
+    super(url + '/hardskillslevels', http, authService);
   }
 }

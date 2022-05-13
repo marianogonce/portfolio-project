@@ -1,28 +1,14 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {url} from '../url';
+import { HttpClient } from '@angular/common/http';
+import { url } from '../url';
 import { DataService } from '../data.service';
-
-
-export interface AntecedentesAcademicosType {
-   
-  institucion:string,
-   logo: string,
-   nombreTitulo: string,
-   descripcion: string,
-   genero: string,
-   estado: string,
-   periodo : {inicio: Date, finalizacion: Date}; 
-}
-
+import { AuthService } from '../authService/auth.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-export class AntecedentesAcedemicosService extends DataService{
-  
-  constructor (http: HttpClient) { 
-    super(url + "/antacademicos", http);
+export class AntecedentesAcedemicosService extends DataService {
+  constructor(http: HttpClient, authService: AuthService) {
+    super(url + '/antacademicos', http, authService);
   }
-
 }

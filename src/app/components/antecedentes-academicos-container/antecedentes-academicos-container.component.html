@@ -1,18 +1,21 @@
-<section-container [icono]="faBookOpen" [arrayDeElementos]="listadoAntecedentes" [tituloYDescripcion]="{titulo: 'Antecedentes Académicos', descripcion: 'Detalle de los títulos, certificados obtenidos y cursos realizados y en progreso' }">
+<section-container formUrl="newantacademicos" [icono]="faBookOpen" [arrayDeElementos]="listadoAntecedentes" [tituloYDescripcion]="{titulo: 'Antecedentes Académicos', descripcion: 'Detalle de los títulos, certificados obtenidos y cursos realizados y en progreso' }">
     <ng-container class="container" *ngFor="let antecedente of listadoAntecedentes | paginate: { id:'antecedentesAcademicos', itemsPerPage: 4, currentPage: pageAntecedentes }" class="container">
         <antecedentes-card
-        [institucion]="antecedente.	antacademicos_institucion"
-        [imagenUrl]="antecedente.antacademicos_Img_url"
+        (newItemEvent)="deleteAntecedente($event)"
+        [antId] = "antecedente.anacademicos_Id"
+        [institucion]="antecedente.antacademicos_institucion"
+        [imagenExt]="antecedente.antacademicos_Img_ext"
         [titulo]="antecedente.antacademicos_titulo"
         [descripcion]="antecedente.antacademicos_descripcion"
         [genero]="antecedente.antacademicos_genero"
         [estado]="antecedente.antacademicos_estado"
-        [periodoFinal]="antecedente.antacademicos_fechaInicio"
-        [periodoInicio]="antecedente.antacademicos_fechaFin"
+        [periodoInicio]="antecedente.antacademicos_fechaInicio"
+        [periodoFinal]="antecedente.antacademicos_fechaFin"
         [IsAcademic]="true"
         ></antecedentes-card>
     </ng-container>
-    <pagination-controls id="antecedentesAcademicos" (pageChange)="pageAntecedentes=$event" previousLabel="Anterior" nextLabel="Siguiente"></pagination-controls>
+    <p *ngIf="listadoAntecedentes.length===0"><b>No hay antecedentes cargados</b></p>
+    <pagination-controls *ngIf="listadoAntecedentes.length!==0" id="antecedentesAcademicos" (pageChange)="pageAntecedentes=$event" previousLabel="Anterior" nextLabel="Siguiente"></pagination-controls>
 </section-container>
 
   

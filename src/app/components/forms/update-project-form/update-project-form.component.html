@@ -1,0 +1,37 @@
+<app-nabvar></app-nabvar>
+<app-progress-spiner [Isloading]="PageLoading"></app-progress-spiner>
+<body *ngIf="PageLoading==='hidden'">
+  <div [style]="{'visibility': invalidAdd}" class="alert alert-danger" role="alert">
+    Algo salió mal. No se pudo modificar el proyecto. Inténtelo nuevamente. 
+  </div>
+  <h1>Modificar Proyecto "{{projectToUpdateData.proyecto_titulo | titlecase}}"</h1>
+          <app-file-upload [previewUrl]="preview" [fileName]="fileMessage" (imageToUpload)="getImageFile($event)"></app-file-upload>
+  <form [formGroup]="form" (ngSubmit)="onSubmit($event)">
+    <div class="form-group">
+        <input formControlName="proyecto_titulo" type="text" class="form-control" aria-describedby="proyecto_titulo" placeholder="Ingrese Titulo" >
+        <div *ngIf="proyecto_titulo!.touched && proyecto_titulo!.invalid" class="alert alert-danger">Titulo is required</div>
+    </div>
+    <div class="form-group">
+      <input formControlName="summary" type="text" class="form-control" aria-describedby="summary" placeholder="Ingrese Resumen" >
+      <div *ngIf="summary!.touched && summary!.invalid" class="alert alert-danger">Resumen is required</div>
+  </div>
+    <div class="form-group">
+        <textarea rows="4" formControlName="proyecto_descripcion" type="text" class="form-control" aria-describedby="proyecto_descripcion" placeholder="Ingrese Descripcion" ></textarea>
+        <div *ngIf="proyecto_descripcion!.touched && proyecto_descripcion!.invalid" class="alert alert-danger">Descripcion is required</div>
+    </div>
+    <div class="form-group">
+        <input formControlName="proyecto_fecha" type="date" class="form-control">
+        <div *ngIf="proyecto_fecha!.touched && proyecto_fecha!.invalid" class="alert alert-danger">Fecha is required</div>
+      </div>
+    <div class="form-group">
+        <input rows="4" formControlName="link_repo_github" type="text" class="form-control" aria-describedby="link_repo_github" placeholder="Ingrese Link de Github" >
+        <div *ngIf="link_repo_github!.touched && link_repo_github!.invalid" class="alert alert-danger">Link is required</div>
+      </div>
+      <button type="submit" class="btn btn-primary">Modificar Proyecto</button>
+    <hr>
+    <button type="submit" class="btn btn-dark" routerLink="">Volver al portfolio</button>
+    <mat-spinner color="accent" diameter=80 [style]="{'visibility': loadingRequest}"></mat-spinner>
+  </form>
+</body>
+
+

@@ -1,0 +1,45 @@
+<app-nabvar></app-nabvar>
+<app-progress-spiner [Isloading]="PageLoading"></app-progress-spiner>
+<body *ngIf="PageLoading==='hidden'">
+  <div [style]="{'visibility': invalidAdd}" class="alert alert-danger" role="alert">
+    Algo salió mal. No se pudo modificar el perfil. Inténtelo nuevamente. 
+  </div>
+  <h1>Editar Perfil</h1>
+  <div id="imagesContainer">
+          <app-file-upload [previewUrl]="previewPortada" [fileName]="fileMessagePortada" (imageToUpload)="getImageFilePortada($event)"></app-file-upload>
+          <app-file-upload [previewUrl]="previewProfilePicture" [fileName]="fileMessageProfilePicture" (imageToUpload)="getImageProfilePicture($event)"></app-file-upload>
+          <app-file-upload [previewUrl]="previewCV" [fileName]="fileMessageCV" (imageToUpload)="getCV($event)"></app-file-upload>
+  </div>
+          <form [formGroup]="form" (ngSubmit)="onSubmit($event)">
+            <h6>Detalles</h6>
+            <hr>
+    <div class="form-group">
+        <input formControlName="frase_Portada" type="text" class="form-control" aria-describedby="frase_Portada" placeholder="Frase de Portada" >
+    </div>
+    <div class="form-group">
+        <input formControlName="nombre_apellido" type="text" class="form-control" aria-describedby="nombre_apellido" placeholder="Nombre y Apellido" >
+        <div *ngIf="nombre_apellido!.touched && nombre_apellido!.invalid" class="alert alert-danger">Nombre y Apellido is required</div>
+
+      </div>
+    <div class="form-group">
+        <input formControlName="fecha_nacimiento" type="date" class="form-control">
+      </div>
+    <div class="form-group">
+        <input formControlName="profesion" type="text" class="form-control" aria-describedby="profesion" placeholder="Profesión" >
+        <div *ngIf="profesion!.touched && profesion!.invalid" class="alert alert-danger">Profesión is required</div>
+      </div>
+    <div class="form-group">
+        <input formControlName="radicacion" type="text" class="form-control" aria-describedby="radicacion" placeholder="Ciudad" >
+        <div *ngIf="radicacion!.touched && radicacion!.invalid" class="alert alert-danger">Radicación is required</div>
+    </div>
+    <div class="form-group">
+      <textarea rows="4" formControlName="descripcion_perfil" type="text" class="form-control" aria-describedby="descripcion_perfil" placeholder="Ingrese descripción del perfil" ></textarea>
+      <div *ngIf="descripcion_perfil!.touched && descripcion_perfil!.invalid" class="alert alert-danger">Descripción is required</div>
+    </div>
+      <button type="submit" class="btn btn-primary">Aceptar cambios de perfil</button>
+    <hr>
+    <button type="submit" class="btn btn-dark" routerLink="">Volver al portfolio</button>
+    <mat-spinner color="accent" diameter=80 [style]="{'visibility': loadingRequest}"></mat-spinner>
+  </form>
+</body>
+
