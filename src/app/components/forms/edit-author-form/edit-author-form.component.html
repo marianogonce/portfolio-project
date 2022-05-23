@@ -8,7 +8,6 @@
   <div id="imagesContainer">
           <app-file-upload [previewUrl]="previewPortada" [fileName]="fileMessagePortada" (imageToUpload)="getImageFilePortada($event)"></app-file-upload>
           <app-file-upload [previewUrl]="previewProfilePicture" [fileName]="fileMessageProfilePicture" (imageToUpload)="getImageProfilePicture($event)"></app-file-upload>
-          <app-file-upload [previewUrl]="previewCV" [fileName]="fileMessageCV" (imageToUpload)="getCV($event)"></app-file-upload>
   </div>
           <form [formGroup]="form" (ngSubmit)="onSubmit($event)">
             <h6>Detalles</h6>
@@ -33,10 +32,14 @@
         <div *ngIf="radicacion!.touched && radicacion!.invalid" class="alert alert-danger">Radicación is required</div>
     </div>
     <div class="form-group">
+      <input formControlName="cv_url" type="text" class="form-control" aria-describedby="cv_url" placeholder="cv_url" >
+      <div *ngIf="cv_url!.touched && cv_url!.invalid" class="alert alert-danger">cv_url is required</div>
+    </div>
+    <div class="form-group">
       <textarea rows="4" formControlName="descripcion_perfil" type="text" class="form-control" aria-describedby="descripcion_perfil" placeholder="Ingrese descripción del perfil" ></textarea>
       <div *ngIf="descripcion_perfil!.touched && descripcion_perfil!.invalid" class="alert alert-danger">Descripción is required</div>
     </div>
-      <button type="submit" class="btn btn-primary">Aceptar cambios de perfil</button>
+      <button type="submit" class="btn btn-primary">Editar perfil</button>
     <hr>
     <button type="submit" class="btn btn-dark" routerLink="">Volver al portfolio</button>
     <mat-spinner color="accent" diameter=80 [style]="{'visibility': loadingRequest}"></mat-spinner>

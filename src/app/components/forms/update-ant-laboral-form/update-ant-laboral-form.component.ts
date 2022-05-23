@@ -6,7 +6,7 @@ import { openSnackBar } from '../../tools/OpenSnackbarfunction';
 import { Router } from '@angular/router';
 import { AntecedentesLaboralesService } from 'src/app/services/antLaboralesService/antecedentes-laborales.service';
 import { FileServiceService } from 'src/app/services/fileService/file-service.service';
-import { forkJoin, Observable } from 'rxjs';
+import { forkJoin, mergeMap, Observable, of } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { url } from 'src/app/services/url';
 
@@ -69,7 +69,6 @@ export class UpdateAntLaboralFormComponent implements OnInit {
   private imageFileToUpload: any;
   public preview: any;
   public fileMessage: any;
-  private extensionArchivoAnterior: any;
 
   getImageFile(imageFile: any) {
     this.imageFile = imageFile;
@@ -78,63 +77,77 @@ export class UpdateAntLaboralFormComponent implements OnInit {
   onSubmit(event: Event) {
     event.preventDefault;
     if (this.form.valid) {
-      let observablesToSubscribe: Observable<unknown>[] = [];
       this.loadingRequest = 'visible';
-      let modificarAntecedenteLaboral =
-        this.antecedentesLaboralesService.update({
+      this.antecedentesLaboralesService
+        .update({
           antlaborales_id: this.antecedenteLaboralToUpdateData.antlaborales_id,
           antlaborales_puesto: this.antlaborales_puesto?.value,
           antlaborales_empleador: this.antlaborales_empleador?.value,
-          antlaborales_img_ext: this.imageFile
-            ? this.imageFile.name.match(/\.[0-9a-z]+$/i)[0]
-            : this.antecedenteLaboralToUpdateData.antlaborales_img_ext,
+          antlaborales_img_url:
+            this.antecedenteLaboralToUpdateData.antlaborales_img_url,
           antlaborales_lugar: this.antlaborales_lugar?.value,
           antlaborales_fecha_inicio: this.antlaborales_fecha_inicio?.value,
           antlaborales_fecha_final: this.antlaborales_fecha_final?.value,
           antlaborales_descripcion: this.antlaborales_descripcion?.value,
           autor: this.userName,
+          antlaborales_Img_deletehash:
+            this.antecedenteLaboralToUpdateData.antlaborales_Img_deletehash,
+        })
+        .pipe(
+          mergeMap((res: any) => {
+            if (this.imageFile) {
+              const formData = new FormData();
+              this.imageFileToUpload = new File(
+                [this.imageFile],
+                this.imageFile.name
+              );
+              formData.append('file', this.imageFileToUpload);
+              formData.append('typeEntity', 'antlaboral');
+              formData.append(
+                'idEntity',
+                this.antecedenteLaboralToUpdateData.antlaborales_id
+              );
+              return this.fileService
+                .deleteFile(
+                  this.antecedenteLaboralToUpdateData
+                    .antlaborales_Img_deletehash
+                )
+                .pipe(
+                  mergeMap((re: any) => {
+                    return this.fileService.uploadFile(formData);
+                  })
+                );
+            }
+
+            return of({});
+          })
+        )
+
+        .subscribe({
+          next: (response) => {
+            this.loadingRequest = 'hidden';
+            this.router.navigate(['/']);
+            openSnackBar(
+              this._snackBar,
+              'Ant Laboral updated : ' +
+                "'" +
+                this.antlaborales_puesto?.value +
+                "'",
+              'green-snackbar',
+              'x'
+            );
+          },
+          error: (error: any) => {
+            this.loadingRequest = 'hidden';
+            this.invalidAdd = 'visible';
+            openSnackBar(
+              this._snackBar,
+              `${error?.message}`,
+              'red-snackbar',
+              'x'
+            );
+          },
         });
-      observablesToSubscribe.push(modificarAntecedenteLaboral);
-      if (this.imageFile) {
-        const formData = new FormData();
-        this.imageFileToUpload = new File(
-          [this.imageFile],
-          this.antecedenteLaboralToUpdateData.antlaborales_id.toString() +
-            this.imageFile.name.match(/\.[0-9a-z]+$/i)[0]
-        );
-        formData.append('file', this.imageFileToUpload);
-        let eliminarImagenAnterior = this.fileService.deleteFile(
-          this.antecedenteLaboralToUpdateData.antlaborales_id.toString() +
-            this.extensionArchivoAnterior
-        );
-        let subirLogo = this.fileService.uploadFile(formData);
-        observablesToSubscribe.push(eliminarImagenAnterior, subirLogo);
-      }
-      forkJoin(observablesToSubscribe).subscribe({
-        next: (response) => {
-          this.loadingRequest = 'hidden';
-          openSnackBar(
-            this._snackBar,
-            'Ant Laboral updated : ' +
-              "'" +
-              this.antlaborales_puesto?.value +
-              "'",
-            'green-snackbar',
-            'x'
-          );
-          this.router.navigate(['/']);
-        },
-        error: (error: any) => {
-          this.loadingRequest = 'hidden';
-          this.invalidAdd = 'visible';
-          openSnackBar(
-            this._snackBar,
-            `${error?.message}`,
-            'red-snackbar',
-            'x'
-          );
-        },
-      });
     } else {
       this.form.markAllAsTouched();
     }
@@ -189,14 +202,7 @@ export class UpdateAntLaboralFormComponent implements OnInit {
           this.antecedenteLaboralToUpdateData.antlaborales_descripcion
         );
 
-        this.preview =
-          url +
-          '/downloadFile/' +
-          this.antecedenteLaboralToUpdateData.antlaborales_id +
-          this.antecedenteLaboralToUpdateData.antlaborales_img_ext;
-
-        this.extensionArchivoAnterior =
-          this.antecedenteLaboralToUpdateData.antlaborales_img_ext;
+        this.preview = this.antecedenteLaboralToUpdateData.antlaborales_img_url;
       },
       error: (error: any) => {
         this.router.navigate([

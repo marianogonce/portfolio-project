@@ -5,7 +5,6 @@ import { SpinnerService } from 'src/app/services/spinnerService/spinner.service'
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { openSnackBar } from '../tools/OpenSnackbarfunction';
-import { url } from 'src/app/services/url';
 
 @Component({
   selector: 'project-profile',
@@ -51,11 +50,7 @@ export class ProjectProfileComponent implements OnInit {
         if (!this.projectSelectedData) {
           this.router.navigate(['/notfound']);
         }
-        this.projectImage =
-          url +
-          '/downloadFile/' +
-          this.projectSelectedId +
-          this.projectSelectedData.img_ext;
+        this.projectImage = this.projectSelectedData.img_url;
       },
       error: (error: any) => {
         this.router.navigate([

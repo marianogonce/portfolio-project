@@ -12,7 +12,7 @@ export class AuthService {
 
   login(credentials: any) {
     return this.http
-      .post(url + '/authenticate', credentials, { responseType: 'text' })
+      .post(url + 'authenticate', credentials, { responseType: 'text' })
       .pipe(
         map((response) => {
           let result: any = response;

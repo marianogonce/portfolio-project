@@ -3,11 +3,12 @@
     <ng-container class="container" *ngFor="let projecto of listadoDeProyectos  | paginate: {id:'projects', itemsPerPage: 3, currentPage: pageProject }" class="container">
      <project-card
      (newItemEvent)="deleteProject($event)"
-     [projectImagenExt] = "projecto.img_ext"
+     [projectImagenUrl] = "projecto.img_url"
      [projectTitle]= "projecto.proyecto_titulo" 
      [projectSummary]= "projecto.summary"
      [projectId]="projecto.proyecto_id"
      [projectDate]= "projecto.proyecto_fecha"
+     [deletehash]="projecto.img_deletehash"
      ></project-card>
     </ng-container>
     <p *ngIf="listadoDeProyectos.length===0"><b>No hay proyectos cargados</b></p>

@@ -31,9 +31,7 @@ export class ProjectsContainerComponent implements OnInit {
       .delete(event.Id)
       .pipe(
         mergeMap((res) => {
-          return this.fileService.deleteFile(
-            event.Id.toString() + event.imagenExt
-          );
+          return this.fileService.deleteFile(event.deletehash);
         })
       )
       .subscribe({
@@ -49,7 +47,7 @@ export class ProjectsContainerComponent implements OnInit {
         error: (error: any) => {
           openSnackBar(
             this._snackBar,
-            `No se pudo eliminar la habilidad ${event.titulo} por ${error?.message}`,
+            `No se pudo eliminar el proyecto ${event.titulo} por ${error?.message}`,
             'red-snackbar',
             'x'
           );

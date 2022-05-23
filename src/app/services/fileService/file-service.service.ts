@@ -18,7 +18,7 @@ export class FileServiceService {
 
   uploadFile(resource: FormData) {
     return this.http
-      .post(url + '/uploadFile', resource, { headers: this.headers })
+      .post(url + 'uploadFile', resource, { headers: this.headers })
       .pipe(
         catchError((error) => {
           console.log(error);
@@ -29,7 +29,7 @@ export class FileServiceService {
 
   downloadFile(fileName: string) {
     return this.http
-      .get(url + '/downloadFile/' + fileName, { headers: this.headers })
+      .get(url + 'downloadFile/' + fileName, { headers: this.headers })
       .pipe(
         catchError((error) => {
           console.log(error);
@@ -40,7 +40,7 @@ export class FileServiceService {
 
   deleteFile(fileName: string) {
     return this.http
-      .delete(url + '/deleteFile/' + fileName, { headers: this.headers })
+      .delete(url + 'deleteFile/' + fileName, { headers: this.headers })
       .pipe(
         catchError((error) => {
           console.log(error);

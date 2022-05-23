@@ -16,6 +16,6 @@ export interface proyectType {
 })
 export class ProjectsService extends DataService {
   constructor(http: HttpClient, authService: AuthService) {
-    super(url + '/projects', http, authService);
+    super(url + 'projects', http, authService);
   }
 }

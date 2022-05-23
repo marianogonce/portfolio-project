@@ -5,7 +5,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { openSnackBar } from '../../tools/OpenSnackbarfunction';
 import { Router } from '@angular/router';
 import { FileServiceService } from 'src/app/services/fileService/file-service.service';
-import { forkJoin, Observable } from 'rxjs';
+import { forkJoin, mergeMap, Observable, of } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { ProjectsService } from 'src/app/services/projectService/projects.service';
 import { url } from 'src/app/services/url';
@@ -65,7 +65,6 @@ export class UpdateProjectFormComponent implements OnInit {
   private imageFileToUpload: any;
   public preview: any;
   public fileMessage: any;
-  public extensionArchivoAnterior: any;
 
   getImageFile(imageFile: any) {
     this.imageFile = imageFile;
@@ -74,58 +73,63 @@ export class UpdateProjectFormComponent implements OnInit {
   onSubmit(event: Event) {
     event.preventDefault;
     if (this.form.valid) {
-      let observablesToSubscribe: Observable<unknown>[] = [];
       this.loadingRequest = 'visible';
-      let modificarProyecto = this.projectService.update({
-        proyecto_id: this.projectToUpdateData.proyecto_id,
-        proyecto_titulo: this.proyecto_titulo?.value,
-        proyecto_descripcion: this.proyecto_descripcion?.value,
-        summary: this.summary?.value,
-        proyecto_fecha: this.proyecto_fecha?.value,
-        img_ext: this.imageFile
-          ? this.imageFile.name.match(/\.[0-9a-z]+$/i)[0]
-          : this.projectToUpdateData.img_ext,
-        link_repo_github: this.link_repo_github?.value,
-        autor: this.userName,
-      });
-      observablesToSubscribe.push(modificarProyecto);
-      if (this.imageFile) {
-        const formData = new FormData();
-        this.imageFileToUpload = new File(
-          [this.imageFile],
-          this.projectToUpdateData.proyecto_id.toString() +
-            this.imageFile.name.match(/\.[0-9a-z]+$/i)[0]
-        );
-        formData.append('file', this.imageFileToUpload);
-        let eliminarImagenAnterior = this.fileService.deleteFile(
-          this.projectToUpdateData.proyecto_id.toString() +
-            this.extensionArchivoAnterior
-        );
-        let subirLogo = this.fileService.uploadFile(formData);
-        observablesToSubscribe.push(eliminarImagenAnterior, subirLogo);
-      }
-      forkJoin(observablesToSubscribe).subscribe({
-        next: (response) => {
-          this.loadingRequest = 'hidden';
-          openSnackBar(
-            this._snackBar,
-            'Project updated : ' + "'" + this.proyecto_titulo?.value + "'",
-            'green-snackbar',
-            'x'
-          );
-          this.router.navigate(['/']);
-        },
-        error: (error: any) => {
-          this.loadingRequest = 'hidden';
-          this.invalidAdd = 'visible';
-          openSnackBar(
-            this._snackBar,
-            `${error?.message}`,
-            'red-snackbar',
-            'x'
-          );
-        },
-      });
+      this.projectService
+        .update({
+          proyecto_id: this.projectToUpdateData.proyecto_id,
+          proyecto_titulo: this.proyecto_titulo?.value,
+          proyecto_descripcion: this.proyecto_descripcion?.value,
+          summary: this.summary?.value,
+          proyecto_fecha: this.proyecto_fecha?.value,
+          img_url: this.projectToUpdateData.img_url,
+          link_repo_github: this.link_repo_github?.value,
+          autor: this.userName,
+          img_deletehash: this.projectToUpdateData.img_deletehash,
+        })
+        .pipe(
+          mergeMap((res: any) => {
+            if (this.imageFile) {
+              const formData = new FormData();
+              this.imageFileToUpload = new File(
+                [this.imageFile],
+                this.imageFile.name
+              );
+              formData.append('file', this.imageFileToUpload);
+              formData.append('typeEntity', 'project');
+              formData.append('idEntity', res.toString());
+              return this.fileService
+                .deleteFile(this.projectToUpdateData.img_deletehash)
+                .pipe(
+                  mergeMap((re: any) => {
+                    return this.fileService.uploadFile(formData);
+                  })
+                );
+            }
+            return of({});
+          })
+        )
+        .subscribe({
+          next: (response) => {
+            this.loadingRequest = 'hidden';
+            this.router.navigate(['/']);
+            openSnackBar(
+              this._snackBar,
+              'Project updated : ' + "'" + this.proyecto_titulo?.value + "'",
+              'green-snackbar',
+              'x'
+            );
+          },
+          error: (error: any) => {
+            this.loadingRequest = 'hidden';
+            this.invalidAdd = 'visible';
+            openSnackBar(
+              this._snackBar,
+              `${error?.message}`,
+              'red-snackbar',
+              'x'
+            );
+          },
+        });
     } else {
       this.form.markAllAsTouched();
     }
@@ -173,13 +177,7 @@ export class UpdateProjectFormComponent implements OnInit {
           this.projectToUpdateData.link_repo_github
         );
 
-        this.preview =
-          url +
-          '/downloadFile/' +
-          this.projectToUpdateData.proyecto_id +
-          this.projectToUpdateData.img_ext;
-
-        this.extensionArchivoAnterior = this.projectToUpdateData.img_ext;
+        this.preview = this.projectToUpdateData.img_url;
       },
       error: (error: any) => {
         this.router.navigate([

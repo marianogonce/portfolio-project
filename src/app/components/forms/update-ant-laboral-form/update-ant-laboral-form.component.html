@@ -5,7 +5,7 @@
     Algo salió mal. No se pudo modificar el antecedente laboral. Inténtelo nuevamente. 
   </div>
 
-  <h1>Modificar Antecedente Laboral "{{antecedenteLaboralToUpdateData.antlaborales_puesto}}"</h1>
+  <h1>Editar Antecedente Laboral "{{antecedenteLaboralToUpdateData.antlaborales_puesto}}"</h1>
           <app-file-upload [previewUrl]="preview" [fileName]="fileMessage" (imageToUpload)="getImageFile($event)"></app-file-upload>
   <form [formGroup]="form" (ngSubmit)="onSubmit($event)">
     <div class="form-group">
@@ -32,7 +32,7 @@
       <textarea rows="4" formControlName="antlaborales_descripcion" type="text" class="form-control" aria-describedby="descripción" placeholder="Ingrese descripción" ></textarea>
       <div *ngIf="antlaborales_descripcion!.touched && antlaborales_descripcion!.invalid" class="alert alert-danger">Description is required</div>
     </div>
-      <button type="submit" class="btn btn-primary">Modificar Antecedente Laboral</button>
+      <button href="#spinner" type="submit" class="btn btn-primary">Editar Antecedente Laboral</button>
     <hr>
     <button type="submit" class="btn btn-dark" routerLink="">Volver al portfolio</button>
     <mat-spinner color="accent" diameter=80 [style]="{'visibility': loadingRequest}"></mat-spinner>

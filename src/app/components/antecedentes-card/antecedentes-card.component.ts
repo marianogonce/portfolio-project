@@ -26,7 +26,7 @@ export class AntecedentesCardComponent implements OnInit {
   }
 
   @Input() antId: number = 0;
-  @Input() imagenExt: string = '';
+  @Input() imagenUrl: string = '';
   @Input() institucion: string = '';
   @Input() titulo: string = '';
   @Input() genero: string = '';
@@ -36,6 +36,7 @@ export class AntecedentesCardComponent implements OnInit {
   @Input() descripcion: string = '';
   @Input() ciudad: string = '';
   @Input() IsAcademic: boolean = true;
+  @Input() deletehash: string = '';
 
   @Output() newItemEvent = new EventEmitter();
 
@@ -69,12 +70,12 @@ export class AntecedentesCardComponent implements OnInit {
     this.newItemEvent.emit({
       antId: this.antId,
       titulo: this.titulo,
-      imagenExt: this.imagenExt,
+      deletehash: this.deletehash,
     });
   }
 
   ngOnInit(): void {
     this.estadoString = EstadoAntecedentes[this.estado];
-    this.urlImagen = url + '/downloadFile/' + this.antId + this.imagenExt;
+    this.urlImagen = this.imagenUrl;
   }
 }

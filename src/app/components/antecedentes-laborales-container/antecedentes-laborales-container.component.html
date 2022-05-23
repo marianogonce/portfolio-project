@@ -4,13 +4,14 @@
         (newItemEvent)="deleteAntecedente($event)"
         [antId] = "antecedente.antlaborales_id"
         [institucion]="antecedente.antlaborales_empleador"
-        [imagenExt]="antecedente.antlaborales_img_ext"
+        [imagenUrl]="antecedente.antlaborales_img_url"
         [titulo]="antecedente.antlaborales_puesto"
         [descripcion]="antecedente.antlaborales_descripcion"
         [periodoFinal]="antecedente.antlaborales_fecha_final"
         [periodoInicio]="antecedente.antlaborales_fecha_inicio"
         [IsAcademic]="false"
         [ciudad]="antecedente.antlaborales_lugar"
+        [deletehash]="antecedente.antlaborales_Img_deletehash"
         ></antecedentes-card>
     </ng-container>
     <p *ngIf="listadoAntecedentes.length===0"><b>No hay antecedentes cargados</b></p>        

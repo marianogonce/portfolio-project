@@ -31,9 +31,7 @@ export class AntecedentesLaboralesContainerComponent implements OnInit {
       .delete(event.antId)
       .pipe(
         mergeMap((res) => {
-          return this.fileService.deleteFile(
-            event.antId.toString() + event.imagenExt
-          );
+          return this.fileService.deleteFile(event.deletehash);
         })
       )
       .subscribe({

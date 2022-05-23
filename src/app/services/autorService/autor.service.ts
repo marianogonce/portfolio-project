@@ -10,6 +10,6 @@ import { AuthService } from '../authService/auth.service';
 })
 export class AutorService extends DataService {
   constructor(http: HttpClient, authService: AuthService) {
-    super(url + '/autor', http, authService);
+    super(url + 'autor', http, authService);
   }
 }

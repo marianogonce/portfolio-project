@@ -8,11 +8,12 @@ import { AuthService } from 'src/app/services/authService/auth.service';
   styleUrls: ['./project-card.component.css'],
 })
 export class ProjectCardComponent implements OnInit {
-  @Input() projectImagenExt: string = '';
+  @Input() projectImagenUrl: string = '';
   @Input() projectTitle: string = '';
   @Input() projectSummary: string = '';
   @Input() projectDate: string = '';
   @Input() projectId: string = '';
+  @Input() deletehash: string = '';
 
   @Output() newItemEvent = new EventEmitter();
 
@@ -24,12 +25,11 @@ export class ProjectCardComponent implements OnInit {
     this.newItemEvent.emit({
       Id: this.projectId,
       titulo: this.projectTitle,
-      imagenExt: this.projectImagenExt,
+      deletehash: this.deletehash,
     });
   }
 
   ngOnInit(): void {
-    this.projectImage =
-      url + '/downloadFile/' + this.projectId + this.projectImagenExt;
+    this.projectImage = this.projectImagenUrl;
   }
 }

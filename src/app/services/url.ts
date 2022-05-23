@@ -1,1 +1,1 @@
-export let url: String = 'https://portfoliomariano-spring-server.herokuapp.com';
+export let url: String = 'https://portfoliomarianoserver.herokuapp.com/';

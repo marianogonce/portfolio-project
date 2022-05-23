@@ -40,7 +40,6 @@ export class AuthorProfileComponent implements OnInit {
         this.autor = response;
         this.autor = this.autor[0];
         this.PageLoading = 'hidden';
-        console.log(this.calcularEdad());
       },
       error: (error: any) => {
         this.router.navigate([

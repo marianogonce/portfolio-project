@@ -66,19 +66,17 @@ export class UpdateHardskillFormComponent implements OnInit {
         })
         .subscribe({
           next: (response) => {
-            console.log('next del formulario agregar hardskill');
+            this.router.navigate(['/']);
             this.loadingRequest = 'hidden';
             openSnackBar(
               this._snackBar,
-              'New HardSkill Added : ' +
+              'HardSkill Updated : ' +
                 "'" +
                 this.hardskill_descripcion?.value +
                 "'",
               'green-snackbar',
               'x'
             );
-            this.Hardskillform.reset();
-            this.Hardskillform.markAsUntouched();
           },
           error: (error: any) => {
             this.loadingRequest = 'hidden';

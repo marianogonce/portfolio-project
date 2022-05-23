@@ -76,18 +76,21 @@ export class AddProjectFormComponent implements OnInit {
           proyecto_descripcion: this.proyecto_descripcion?.value,
           summary: this.summary?.value,
           proyecto_fecha: this.proyecto_fecha?.value,
-          img_ext: this.imageFile.name.match(/\.[0-9a-z]+$/i)[0],
+          img_url: '',
           link_repo_github: this.link_repo_github?.value,
           autor: this.userName,
+          img_deletehash: '',
         })
         .pipe(
           mergeMap((res: any) => {
             const formData = new FormData();
             this.imageFileToUpload = new File(
               [this.imageFile],
-              res.toString() + this.imageFile.name.match(/\.[0-9a-z]+$/i)[0]
+              this.imageFile.name
             );
             formData.append('file', this.imageFileToUpload);
+            formData.append('typeEntity', 'project');
+            formData.append('idEntity', res.toString());
             return this.fileService.uploadFile(formData);
           })
         )

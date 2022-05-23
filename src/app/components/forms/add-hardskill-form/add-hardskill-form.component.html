@@ -4,7 +4,7 @@
   <div [style]="{'visibility': invalidAdd}" class="alert alert-danger" role="alert">
     Algo salió mal. No se pudo agregar una  nueva habilidad dura. Inténtelo nuevamente. 
   </div>
-  <h1>New HardSkill</h1>
+  <h1>Nueva HardSkill</h1>
     <form [formGroup]="Hardskillform" (ngSubmit)="onSubmit($event)">
     <div class="form-group">
       <input formControlName="hardskill_descripcion" type="text" class="form-control" aria-describedby="hardskillHelp" placeholder="Description" >
@@ -23,9 +23,9 @@
       </ng-container>
       </select>
     </div>
-    <button type="submit" class="btn btn-primary">Add new HardSkill</button>
+    <button type="submit" class="btn btn-primary">Agregar HardSkill</button>
     <hr>
-    <button type="submit" class="btn btn-dark" routerLink="">Back to portfolio</button>
+    <button type="submit" class="btn btn-dark" routerLink="">Volver al portfolio</button>
     <mat-spinner color="accent" diameter=80 [style]="{'visibility': loadingRequest}"></mat-spinner>
   </form>
 </body>

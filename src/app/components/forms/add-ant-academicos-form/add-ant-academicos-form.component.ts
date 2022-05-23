@@ -81,7 +81,7 @@ export class AddAntAcademicosFormComponent implements OnInit {
     if (this.form.valid && this.imageFile) {
       this.loadingRequest = 'visible';
       this.AntecedentesAcedemicosService.create({
-        antacademicos_Img_ext: this.imageFile.name.match(/\.[0-9a-z]+$/i)[0],
+        antacademicos_Img_url: '',
         antacademicos_institucion: this.antacademicos_institucion?.value,
         antacademicos_fechaInicio: this.antacademicos_fecha_inicio?.value,
         antacademicos_fechaFin: this.antacademicos_fecha_fin?.value,
@@ -90,15 +90,18 @@ export class AddAntAcademicosFormComponent implements OnInit {
         autor: this.userName,
         antacademicos_genero: this.antacademicos_genero?.value,
         antacademicos_titulo: this.antacademicos_titulo?.value,
+        antacademicos_Img_deletehash: '',
       })
         .pipe(
           mergeMap((res: any) => {
             const formData = new FormData();
             this.imageFileToUpload = new File(
               [this.imageFile],
-              res.toString() + this.imageFile.name.match(/\.[0-9a-z]+$/i)[0]
+              this.imageFile.name
             );
             formData.append('file', this.imageFileToUpload);
+            formData.append('typeEntity', 'antacademico');
+            formData.append('idEntity', res.toString());
             return this.fileService.uploadFile(formData);
           })
         )

@@ -80,21 +80,24 @@ export class AddAntLaboralFormComponent implements OnInit {
         antlaborales_id: '',
         antlaborales_puesto: this.antlaborales_puesto?.value,
         antlaborales_empleador: this.antlaborales_empleador?.value,
-        antlaborales_img_ext: this.imageFile.name.match(/\.[0-9a-z]+$/i)[0],
+        antlaborales_img_url: '',
         antlaborales_lugar: this.antlaborales_lugar?.value,
         antlaborales_fecha_inicio: this.antlaborales_fecha_inicio?.value,
         antlaborales_fecha_final: this.antlaborales_fecha_final?.value,
         antlaborales_descripcion: this.antlaborales_descripcion?.value,
         autor: this.userName,
+        antlaborales_Img_deletehash: '',
       })
         .pipe(
           mergeMap((res: any) => {
             const formData = new FormData();
             this.imageFileToUpload = new File(
               [this.imageFile],
-              res.toString() + this.imageFile.name.match(/\.[0-9a-z]+$/i)[0]
+              this.imageFile.name
             );
             formData.append('file', this.imageFileToUpload);
+            formData.append('typeEntity', 'antlaboral');
+            formData.append('idEntity', res.toString());
             return this.fileService.uploadFile(formData);
           })
         )

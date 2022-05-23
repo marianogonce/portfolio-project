@@ -7,9 +7,8 @@ import { Router } from '@angular/router';
 import { AntecedentesAcedemicosService } from 'src/app/services/antAcedemicosService/antecedentes-acedemicos.service';
 import { EstadoAcademicoService } from 'src/app/services/antAcademicosEstadoService/estado-academico.service';
 import { FileServiceService } from 'src/app/services/fileService/file-service.service';
-import { forkJoin, Observable } from 'rxjs';
+import { forkJoin, mergeMap, Observable, of } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
-import { url } from 'src/app/services/url';
 
 @Component({
   selector: 'edit-ant-academicos-form',
@@ -76,7 +75,6 @@ export class EditAntAcademicosFormComponent implements OnInit {
   private imageFileToUpload: any;
   public preview: any;
   public fileMessage: any;
-  private extensionArchivoAnterior: any;
 
   getImageFile(imageFile: any) {
     this.imageFile = imageFile;
@@ -87,61 +85,73 @@ export class EditAntAcademicosFormComponent implements OnInit {
     if (this.form.valid) {
       let observableToSubscribe: Observable<unknown>[] = [];
       this.loadingRequest = 'visible';
-      let updateAntAcademico = this.antecedentesAcedemicosService.update({
-        anacademicos_Id: this.antecedentesAcedemicoToUpdateData.anacademicos_Id,
-        antacademicos_Img_ext: this.imageFile
-          ? this.imageFile.name.match(/\.[0-9a-z]+$/i)[0]
-          : this.antecedentesAcedemicoToUpdateData.antacademicos_Img_ext,
-        antacademicos_institucion: this.antacademicos_institucion?.value,
-        antacademicos_fechaInicio: this.antacademicos_fecha_inicio?.value,
-        antacademicos_fechaFin: this.antacademicos_fecha_fin?.value,
-        antacademicos_descripcion: this.antacademicos_descripcion?.value,
-        antacademicos_estado: parseInt(this.antacademicos_estado?.value),
-        autor: this.userName,
-        antacademicos_genero: this.antacademicos_genero?.value,
-        antacademicos_titulo: this.antacademicos_titulo?.value,
-      });
-      observableToSubscribe.push(updateAntAcademico);
-      if (this.imageFile) {
-        const formData = new FormData();
-        this.imageFileToUpload = new File(
-          [this.imageFile],
-          this.antecedentesAcedemicoToUpdateData.anacademicos_Id.toString() +
-            this.imageFile.name.match(/\.[0-9a-z]+$/i)[0]
-        );
-        formData.append('file', this.imageFileToUpload);
-        let updateFile = this.fileService.uploadFile(formData);
-        let eliminarImagenAnterior = this.fileService.deleteFile(
-          this.antecedentesAcedemicoToUpdateData.anacademicos_Id.toString() +
-            this.extensionArchivoAnterior
-        );
-        observableToSubscribe.push(eliminarImagenAnterior, updateFile);
-      }
-      forkJoin(observableToSubscribe).subscribe({
-        next: (response) => {
-          this.loadingRequest = 'hidden';
-          openSnackBar(
-            this._snackBar,
-            'Ant Academicos updated : ' +
-              "'" +
-              this.antacademicos_titulo?.value +
-              "'",
-            'green-snackbar',
-            'x'
-          );
-          this.router.navigate(['/']);
-        },
-        error: (error: any) => {
-          this.loadingRequest = 'hidden';
-          this.invalidAdd = 'visible';
-          openSnackBar(
-            this._snackBar,
-            `${error?.message}`,
-            'red-snackbar',
-            'x'
-          );
-        },
-      });
+      this.antecedentesAcedemicosService
+        .update({
+          anacademicos_Id:
+            this.antecedentesAcedemicoToUpdateData.anacademicos_Id,
+          antacademicos_Img_url:
+            this.antecedentesAcedemicoToUpdateData.antacademicos_Img_url,
+          antacademicos_institucion: this.antacademicos_institucion?.value,
+          antacademicos_fechaInicio: this.antacademicos_fecha_inicio?.value,
+          antacademicos_fechaFin: this.antacademicos_fecha_fin?.value,
+          antacademicos_descripcion: this.antacademicos_descripcion?.value,
+          antacademicos_estado: parseInt(this.antacademicos_estado?.value),
+          autor: this.userName,
+          antacademicos_genero: this.antacademicos_genero?.value,
+          antacademicos_titulo: this.antacademicos_titulo?.value,
+          antacademicos_Img_deletehash:
+            this.antecedentesAcedemicoToUpdateData.antacademicos_Img_deletehash,
+        })
+        .pipe(
+          mergeMap((res: any) => {
+            if (this.imageFile) {
+              const formData = new FormData();
+              this.imageFileToUpload = new File(
+                [this.imageFile],
+                this.imageFile.name
+              );
+              formData.append('file', this.imageFileToUpload);
+              formData.append('typeEntity', 'antacademico');
+              formData.append('idEntity', res.toString());
+              return this.fileService
+                .deleteFile(
+                  this.antecedentesAcedemicoToUpdateData
+                    .antacademicos_Img_deletehash
+                )
+                .pipe(
+                  mergeMap((re: any) => {
+                    return this.fileService.uploadFile(formData);
+                  })
+                );
+            }
+            return of({});
+          })
+        )
+        .subscribe({
+          next: (response) => {
+            this.router.navigate(['/']);
+            this.loadingRequest = 'hidden';
+            openSnackBar(
+              this._snackBar,
+              'Ant Academicos updated : ' +
+                "'" +
+                this.antacademicos_titulo?.value +
+                "'",
+              'green-snackbar',
+              'x'
+            );
+          },
+          error: (error: any) => {
+            this.loadingRequest = 'hidden';
+            this.invalidAdd = 'visible';
+            openSnackBar(
+              this._snackBar,
+              `${error?.message}`,
+              'red-snackbar',
+              'x'
+            );
+          },
+        });
     } else {
       this.form.markAllAsTouched();
       if (!this.imageFile) {
@@ -208,13 +218,7 @@ export class EditAntAcademicosFormComponent implements OnInit {
           this.antecedentesAcedemicoToUpdateData.antacademicos_titulo
         );
         this.preview =
-          url +
-          '/downloadFile/' +
-          this.antecedentesAcedemicoToUpdateData.anacademicos_Id +
-          this.antecedentesAcedemicoToUpdateData.antacademicos_Img_ext;
-
-        this.extensionArchivoAnterior =
-          this.antecedentesAcedemicoToUpdateData.antacademicos_Img_ext;
+          this.antecedentesAcedemicoToUpdateData.antacademicos_Img_url;
       },
       error: (error: any) => {
         this.router.navigate([

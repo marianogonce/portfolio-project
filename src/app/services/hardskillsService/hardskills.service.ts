@@ -9,6 +9,6 @@ import { AuthService } from '../authService/auth.service';
 })
 export class HardskillsService extends DataService {
   constructor(http: HttpClient, authService: AuthService) {
-    super(url + '/hardskills', http, authService);
+    super(url + 'hardskills', http, authService);
   }
 }
