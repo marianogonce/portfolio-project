@@ -12,7 +12,7 @@ export class DataService {
   constructor(
     @Inject(String) private url: string,
     private http: HttpClient,
-    private authService: AuthService
+    @Inject(AuthService) private authService: AuthService
   ) {}
 
   private headers = new HttpHeaders().append(

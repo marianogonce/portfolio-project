@@ -41,6 +41,9 @@ export class AuthService {
   }
 
   getToken() {
-    return 'Bearer ' + localStorage.getItem('token');
+    if (this.isLoggedIn()) {
+      return 'Bearer ' + localStorage.getItem('token');
+    }
+    return '';
   }
 }
