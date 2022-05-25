@@ -6,6 +6,7 @@
   </div>
 
   <h1>Editar Antecedente Laboral "{{antecedenteLaboralToUpdateData.antlaborales_puesto}}"</h1>
+
           <app-file-upload [previewUrl]="preview" [fileName]="fileMessage" (imageToUpload)="getImageFile($event)"></app-file-upload>
   <form [formGroup]="form" (ngSubmit)="onSubmit($event)">
     <div class="form-group">
@@ -36,6 +37,7 @@
     <hr>
     <button type="submit" class="btn btn-dark" routerLink="">Volver al portfolio</button>
     <mat-spinner color="accent" diameter=80 [style]="{'visibility': loadingRequest}"></mat-spinner>
+
   </form>
 </body>
 

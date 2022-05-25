@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { LayoutModule } from '@angular/cdk/layout';
 import { RouterModule } from '@angular/router';
@@ -60,6 +60,7 @@ import { AddAntLaboralFormComponent } from './components/forms/add-ant-laboral-f
 import { UpdateAntLaboralFormComponent } from './components/forms/update-ant-laboral-form/update-ant-laboral-form.component';
 import { AddProjectFormComponent } from './components/forms/add-project-form/add-project-form.component';
 import { UpdateProjectFormComponent } from './components/forms/update-project-form/update-project-form.component';
+import { AuthInterceptorInterceptor } from './auth-interceptor.interceptor';
 
 @NgModule({
   declarations: [
@@ -197,6 +198,11 @@ import { UpdateProjectFormComponent } from './components/forms/update-project-fo
     HardskillLevelService,
     EstadoAcademicoService,
     FileServiceService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptorInterceptor,
+      multi: true,
+    },
   ],
   bootstrap: [AppComponent],
 })

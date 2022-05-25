@@ -15,11 +15,6 @@ export class DataService {
     @Inject(AuthService) private authService: AuthService
   ) {}
 
-  private headers = new HttpHeaders().append(
-    'Authorization',
-    this.authService.getToken()
-  );
-
   getAll() {
     return this.http.get(this.url, { responseType: 'json' }).pipe(
       catchError((error) => {
@@ -30,20 +25,17 @@ export class DataService {
   }
 
   create(resource: any) {
-    return this.http
-      .post(this.url, resource, { headers: this.headers, responseType: 'json' })
-      .pipe(
-        catchError((error) => {
-          console.log(error);
-          return throwError(() => error);
-        })
-      );
+    return this.http.post(this.url, resource, { responseType: 'json' }).pipe(
+      catchError((error) => {
+        console.log(error);
+        return throwError(() => error);
+      })
+    );
   }
 
   delete(id: any) {
     return this.http
       .delete(this.url + '/' + id, {
-        headers: this.headers,
         responseType: 'json',
       })
       .pipe(
@@ -55,13 +47,11 @@ export class DataService {
   }
 
   update(resource: any) {
-    return this.http
-      .put(this.url, resource, { headers: this.headers, responseType: 'json' })
-      .pipe(
-        catchError((error) => {
-          console.log(error);
-          return throwError(() => error);
-        })
-      );
+    return this.http.put(this.url, resource, { responseType: 'json' }).pipe(
+      catchError((error) => {
+        console.log(error);
+        return throwError(() => error);
+      })
+    );
   }
 }

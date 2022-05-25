@@ -5,6 +5,7 @@
     Algo salió mal. No se pudo modificar el proyecto. Inténtelo nuevamente. 
   </div>
   <h1>Editar Proyecto "{{projectToUpdateData.proyecto_titulo | titlecase}}"</h1>
+
           <app-file-upload [previewUrl]="preview" [fileName]="fileMessage" (imageToUpload)="getImageFile($event)"></app-file-upload>
   <form [formGroup]="form" (ngSubmit)="onSubmit($event)">
     <div class="form-group">
@@ -31,6 +32,7 @@
     <hr>
     <button type="submit" class="btn btn-dark" routerLink="">Volver al portfolio</button>
     <mat-spinner color="accent" diameter=80 [style]="{'visibility': loadingRequest}"></mat-spinner>
+
   </form>
 </body>
 
